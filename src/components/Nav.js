@@ -57,9 +57,9 @@ const Active = css`
   border-top: 1px solid #e3778c;
 `;
 const Nav = () => (
-  <Bloki row>
-    {theme => (
+
     <Bloki col auto>
+      {theme => (
         <NavEl>
         <Branding to="/"><h1>Ren Rizzolo</h1></Branding>
           <Menu className={theme.up.includes('md') ? null : NavMdDown}>
@@ -67,7 +67,6 @@ const Nav = () => (
           <Item label="About" to="/about" className={Anchor} activeClassName={Active} />
         </Menu>
       </NavEl>
-    </Bloki>
     )}
   </Bloki>
 );
