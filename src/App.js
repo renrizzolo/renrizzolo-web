@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Bloki, { BlokiProvider } from 'bloki';
 import { ThemeProvider } from 'emotion-theming';
 
-import Header from './Header';
-import Home from './Home';
-import About from './About';
-import Post from './Post';
+import Header from './components/Header';
+import Home from './views/Home';
+import About from './views/About';
+import Post from './views/Post';
 
 import { injectGlobal } from 'emotion';
 import { css } from 'react-emotion';
@@ -74,10 +74,10 @@ const App = () => (
           className={css`${Root}`}
           justify="center"
           mdUpStyle={{ maxWidth: blokiTheme.breakpoints.sm - 32 }}
-          lgUpStyle={{ maxWidth: blokiTheme.breakpoints.md - 32 }}
+          lgUpStyle={{ maxWidth: 1440 }}
         >
           <Header />
-          <main>
+          <main className={css`width: 100%;`}>
             <Bloki row>
               <Route exact path="/" component={Home} />
               <Route path="/about" component={About} />

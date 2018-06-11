@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Bloki from 'bloki';
-
+import Panel from './Panel';
 const POSTS_PER_PAGE = 4;
 
 const allPosts = gql`
@@ -29,18 +29,18 @@ const allPostsQueryVars = {
 };
 
 const ListPosts = () => (
-  <Query query={allPosts} variables={{ ...allPostsQueryVars, notifyOnNetworkStatusChange: true }}>
-    {({
- loading, error, data: { allPosts, _allPostsMeta }, networkStatus 
-}, loadMorePosts) => {
+  <section>
+    <Query query={allPosts} variables={{ ...allPostsQueryVars, notifyOnNetworkStatusChange: true }}>
+      {({
+        loading, error, data: { allPosts, _allPostsMeta }, networkStatus 
+        }, loadMorePosts) => {
       console.log(loading, error, allPosts);
 
-      if (loading) return 'Loading...';
+      if (loading) return <div>Loading...</div>;
       if (error) return `Error! ${error.message}`;
       const areMorePosts = _allPostsMeta.count > allPosts.length;
       return (
-        <Bloki col auto>
-        <section>
+        <React.Fragment>
           <ul className="Home-ul">
             {allPosts.length ?
               allPosts.map(post => (
@@ -58,7 +58,10 @@ const ListPosts = () => (
                 </li>
 
             ))
-              : <h3>No posts</h3>
+              : 
+              <Panel>
+                <h3>No posts</h3>
+              </Panel>
               }
           </ul>
           <div className="Home-showMoreWrapper">
@@ -68,11 +71,11 @@ const ListPosts = () => (
               </button>
               : ''}
           </div>
-        </section>
-      </Bloki>
+        </React.Fragment>
       );
     }}
-  </Query>
+    </Query>
+  </section>
 );
 
 
