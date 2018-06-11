@@ -9,7 +9,27 @@ import Loading from '../components/Loading';
 import Error from '../components/Error';
 import { Img, LargeHeading } from '../components/common';
 import Date from '../components/Date';
+import TagItem from '../components/TagItem';
 
+
+const Header = styled('header')`
+    background: white;
+    padding: 0 24px;
+    border-right: 1px solid;
+    display: inline-block;
+    border-top: 1px solid;
+    margin-left: -24px;
+    @media screen and (max-width: 899px) {
+      border: none;
+    }
+`;
+const ArticleContainer = styled(Container)`
+   max-width: 800px; 
+   margin-top: -95px; 
+    @media screen and (max-width: 899px) {
+      margin-top: 0;
+    }
+`;
 const Post = ({ match }) => (
   <Query query={singlePost} variables={{ slug: match.params.slug }}>
     {({ loading, error, data: { post } }) => {
@@ -17,7 +37,6 @@ const Post = ({ match }) => (
       if (error) return <Error>Couldn't load the post</Error>;
       return (
   <React.Fragment>
-    
     <Container>
       <Date date={post.dateAndTime} />
       <Img
@@ -26,22 +45,26 @@ const Post = ({ match }) => (
         src={`https://media.graphcms.com/resize=w:650,h:366,fit:crop/${post.coverImage.handle}`}
       />
     </Container>
-    <Container style={{maxWidth: 800}}>
-
+          <ArticleContainer>
             <FadeIn>
               <article>
-                <header className={css`margin-bottom: 1rem;`}>
+                <Header>
                   <LargeHeading>{post.title}</LargeHeading>
-                </header>
-
+                </Header>
                 <Markdown
                   source={post.content}
                   escapeHtml={false}
                 />
+                <div>
+                  {
+                  post.tags && post.tags.map(tag => (
+                    <TagItem tag={tag.tag} />
+                  ))
+                  }
+                </div>
               </article>
             </FadeIn>
-
-    </Container>
+          </ArticleContainer>
   </React.Fragment>
       );
     }}
