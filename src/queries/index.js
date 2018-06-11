@@ -15,14 +15,18 @@ export const allAuthors = gql`
 
 
 export const allPosts = gql`
-  query allPosts($first: Int!, $skip: Int!) {
-    allPosts(orderBy: dateAndTime_DESC, first: $first, skip: $skip) {
+  query allPosts($first: Int!, $skip: Int!, $filter: PostFilter) {
+    allPosts(orderBy: dateAndTime_DESC, first: $first, skip: $skip, filter: $filter) {
       id
       slug
       title
       dateAndTime
       coverImage {
         handle
+      }
+      tags {
+        id
+        tag
       }
     },
     _allPostsMeta {
@@ -38,6 +42,10 @@ export const singlePost = gql`
       id
       slug
       title
+      tags {
+        id
+        tag
+      }
       coverImage {
         handle
       }
