@@ -4,7 +4,7 @@ import Bloki from 'bloki';
 
 export default (props) => {
   return (
-    <Bloki wrap={false} col mb {...props}>
+    <Bloki wrap={false} col auto {...props}>
       {props.children}
     </Bloki>
   )
