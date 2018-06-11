@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Home from './views/Home';
 import About from './views/About';
 import Post from './views/Post';
+import Tag from './views/Tag';
 
 import { injectGlobal } from 'emotion';
 import { css } from 'react-emotion';
@@ -99,22 +100,24 @@ const App = () => (
     <BlokiProvider theme={blokiTheme}>
       <Router>
         <Bloki
-          col
           innerSpacing={false}
           wrap={false}
           className={css`${Root}`}
           justify="flex-start"
+          align="flex-start"
           mdUpStyle={{ maxWidth: blokiTheme.breakpoints.sm - 32 }}
           lgUpStyle={{ maxWidth: 1440 }}
         >
-          <Header />
-          <main className={css`width: 100%;`}>
-            <Bloki row>
+          <Bloki row>
+            <Header />
+            <main className={css`width: 100%;`}>
               <Route exact path="/" component={Home} />
               <Route path="/about" component={About} />
               <Route path="/post/:slug" component={Post} />
-            </Bloki>
-          </main>
+              <Route path="/tag/:tag" component={Tag} />
+
+            </main>
+          </Bloki>
         </Bloki>
       </Router>
     </BlokiProvider>
