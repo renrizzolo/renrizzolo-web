@@ -20,6 +20,7 @@ const NavEl = styled('nav')`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid;
 }
 `;
 
@@ -47,13 +48,13 @@ const Anchor = css`
   display: block;
   transition: all 300ms ease;
   color: currentColor;
-  border-bottom: 1px solid #dadada;
+  border-top: none;
   padding: 0.5rem 0;
   transition: all 300ms ease; 
 `;
 const Active = css`
   color: #c22954;
-  border-bottom: 1px solid #c22954;
+  border-top: 1px solid #e3778c;
 `;
 const Nav = () => (
   <Bloki row>

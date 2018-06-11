@@ -23,6 +23,7 @@ const emotionTheme = {
     primary: '#e3778c',
     primaryDark: '#c22954',
     brand: '#50363d',
+    error: 'crimson',
   }
 };
 
@@ -30,9 +31,10 @@ injectGlobal`
   * {
     box-sizing: border-box;
   }
+  @import url('https://fonts.googleapis.com/css?family=Poppins:400,800');
   body {
     font-size: 16px;
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'Poppins', Helvetica, Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     margin: 0;
@@ -48,6 +50,31 @@ injectGlobal`
       color: ${emotionTheme.colors.primaryDark};
     }
   }
+  figure {
+    margin: 0;
+  }
+  blockquote {
+    border-left: 8px solid #e2e2e2;
+    padding-left: 8px;
+    font-weight: bold;
+    font-size: 120%;
+    color: #50363d;
+  }
+  code {
+    background-color: #e2e2e2;
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+  pre {
+    padding: 1rem;
+    white-space: pre-wrap;
+    background-color: #fafafa;
+    & > code {
+      background-color:inherit;
+      padding: 0px;
+      border-radius: 0px;
+    }
+  }
 
 `;
 
@@ -55,7 +82,7 @@ const blokiTheme = {
   spacing: 16,
   columns: 12,
   breakpoints: {
-    xs: 360,
+    xs: 420,
     sm: 720,
     md: 900,
     lg: 1080,
@@ -65,14 +92,18 @@ const blokiTheme = {
 // @todo: Make bloki use className so the styles can be overridden
 const Root = css`
     margin: 0 auto!important;
+    height: 100vh;
 `;
 const App = () => (
   <ThemeProvider theme={emotionTheme}>
     <BlokiProvider theme={blokiTheme}>
       <Router>
         <Bloki
+          col
+          innerSpacing={false}
+          wrap={false}
           className={css`${Root}`}
-          justify="center"
+          justify="flex-start"
           mdUpStyle={{ maxWidth: blokiTheme.breakpoints.sm - 32 }}
           lgUpStyle={{ maxWidth: 1440 }}
         >

@@ -1,27 +1,18 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
 import Bloki from 'bloki';
 import Panel from '../components/Panel';
 import Container from '../components/Container';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
+import { allAuthors } from '../queries';
+import { Img, Heading } from '../components/common';
 
-const Img = styled('img')`
-width:100%;
-height: auto;
-`;
 
-export const allAuthors = gql`
-  query allAuthors {
-    allAuthors {
-      id
-      name
-      bibliography
-      avatar {
-        handle
-      }
-    }
-  }
+
+const Paragraph = styled('p')`
+
 `;
 
 const About = () => (
@@ -29,28 +20,27 @@ const About = () => (
     <section>
       <Query query={allAuthors}>
         {({
-          loading, error, data: { allAuthors }, networkStatus,
-      }, loadMorePosts) => {
+          loading, error, data: { allAuthors }, networkStatus, }) => {
         console.log(loading, error, allAuthors);
 
-        if (loading) return <div>Loading...</div>;
-        if (error) return `Error! ${error.message}`;
+          if (loading) return <Loading />;
+          if (error) return <Error>Couldn't load the post</Error>;
           return (
-            allAuthors.length ?
+            allAuthors && allAuthors.length ?
             allAuthors.map(author => (
 
               <React.Fragment key={author.id}>
               <Bloki row>
-                <Bloki col xl={2} lg={2} md={2} sm={2} xs={4}>
+                <Bloki innerSpacing={false} col xl={1} lg={2} md={2} sm={2} xs={12}>
                   <Img
-
+                    className={css`min-width: 50px;max-width: 90px;`}
                     alt={author.name}
                     src={`https://media.graphcms.com/resize=w:100,h:100,fit:crop/${author.avatar.handle}`}
                   />
                 </Bloki>
-                <Bloki col xl={10} lg={10} md={10} sm={10} xs={8}>
-                  <h1>Hello! My name is {author.name}</h1>
-                  <p>{author.bibliography}</p>
+                <Bloki innerSpacing={false} col xl={11} lg={10} md={10} sm={10} xs={12}>
+                  <Heading>Hello! My name is {author.name}</Heading>
+                  <Paragraph>{author.about}</Paragraph>
                 </Bloki>
               </Bloki>
             </React.Fragment>

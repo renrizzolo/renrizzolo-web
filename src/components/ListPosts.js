@@ -1,27 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import Bloki from 'bloki';
 import Panel from './Panel';
-const POSTS_PER_PAGE = 4;
+import Loading from '../components/Loading';
+import Error from '../components/Error';
+import { allPosts } from '../queries';
 
-const allPosts = gql`
-  query allPosts($first: Int!, $skip: Int!) {
-    allPosts(orderBy: dateAndTime_DESC, first: $first, skip: $skip) {
-      id
-      slug
-      title
-      dateAndTime
-      coverImage {
-        handle
-      }
-    },
-    _allPostsMeta {
-      count
-    }
-  }
-`;
+const POSTS_PER_PAGE = 4;
 
 const allPostsQueryVars = {
   skip: 0,
@@ -35,21 +20,19 @@ const ListPosts = () => (
         loading, error, data: { allPosts, _allPostsMeta }, networkStatus 
         }, loadMorePosts) => {
       console.log(loading, error, allPosts);
-
-      if (loading) return <div>Loading...</div>;
-      if (error) return `Error! ${error.message}`;
+        if (loading) return <Loading />;
+        if (error) return <Error>Couldn't load the post</Error>;
       const areMorePosts = _allPostsMeta.count > allPosts.length;
       return (
         <React.Fragment>
-          <ul className="Home-ul">
+          <ul>
             {allPosts.length ?
               allPosts.map(post => (
-                <li className="Home-li" key={`post-${post.id}`}>
-                  <Link to={`/post/${post.slug}`} className="Home-link">
-                    <div className="Home-placeholder">
+                <li key={`post-${post.id}`}>
+                  <Link to={`/post/${post.slug}`}>
+                    <div>
                       <img
                         alt={post.title}
-                        className="Home-img"
                         src={`https://media.graphcms.com/resize=w:100,h:100,fit:crop/${post.coverImage.handle}`}
                       />
                     </div>
@@ -60,7 +43,7 @@ const ListPosts = () => (
             ))
               : 
               <Panel>
-                <h3>No posts</h3>
+                <h3>If I made a post, it'd be here.</h3>
               </Panel>
               }
           </ul>
