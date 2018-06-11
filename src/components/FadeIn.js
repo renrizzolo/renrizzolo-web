@@ -5,7 +5,7 @@ import { Motion, spring } from 'react-motion';
 export default (props) => {
   return (
       <Motion
-        style={{ opacity: spring(1) }}
+        style={{ opacity: spring(1, {damping: 40}) }}
         defaultStyle={{ opacity: 0 }}
       >
         {({ opacity }) => (
