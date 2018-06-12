@@ -22,21 +22,23 @@ const allPostsQueryVars = {
 
 const ListPosts = (props) => {
   const { skip, first, filter } = props;
+  console.log(filter);
+  
   return (
     <section>
       <Query
-query={allPosts}
-variables={{
- skip, first, filter, notifyOnNetworkStatusChange: true 
-}}
+        query={allPosts}
+        variables={{
+        skip, first, filter, notifyOnNetworkStatusChange: true 
+        }}
       >
         {({
-          loading, error, data: { allPosts, _allPostsMeta }, networkStatus,
-          }, loadMorePosts) => {
+          loading, error, data: { allPosts, _allPostsMeta }, networkStatus, loadMorePosts
+          }) => {
         console.log(loading, error, allPosts);
           if (loading) return <Loading />;
           if (error) return <Error>Couldn't load the post</Error>;
-        const areMorePosts = _allPostsMeta.count > allPosts.length;
+          const areMorePosts = _allPostsMeta.count > allPosts.length && allPosts.length > 0;
         return (
           <Grid>
             
@@ -50,7 +52,7 @@ variables={{
               </Trail>
                 :
                 <Panel>
-                  <h3>If I made a post, it'd be here.</h3>
+                  <h3>Hmmm. Couldn't find anything.</h3>
                 </Panel>
                 }
             <Bloki row>

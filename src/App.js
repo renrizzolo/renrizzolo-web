@@ -8,6 +8,7 @@ import Home from './views/Home';
 import About from './views/About';
 import Post from './views/Post';
 import Tag from './views/Tag';
+import ListPosts from './components/ListPosts';
 
 import { injectGlobal } from 'emotion';
 import { css } from 'react-emotion';
@@ -114,7 +115,7 @@ const App = () => (
               <Route exact path="/" component={Home} />
               <Route path="/about" component={About} />
               <Route path="/post/:slug" component={Post} />
-              <Route path="/tag/:tag" component={Tag} />
+              <Route path="/tag/:tag" component={Tag}/>
 
             </main>
           </Bloki>
