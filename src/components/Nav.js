@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled, { css }  from 'react-emotion';
 import { NavLink } from 'react-router-dom';
 import Bloki from 'bloki';
+import { Transition, animated } from 'react-spring'
+
 
 const Branding = styled(NavLink)`
   display: inline-block;
@@ -56,29 +58,63 @@ const Active = css`
   color: #c22954;
   border-top: 1px solid #e3778c;
 `;
-const Nav = () => (
+export default () => (
 
     <Bloki col auto>
       {theme => (
         <NavEl>
-        <Branding to="/"><h1>Ren Rizzolo</h1></Branding>
+          <Branding to="/"><h1>Ren Rizzolo</h1></Branding>
           <Menu className={theme.up.includes('md') ? null : NavMdDown}>
-          <Item label="Home" to="/" exact className={Anchor} activeClassName={Active} />
-          <Item label="About" to="/about" className={Anchor} activeClassName={Active} />
-        </Menu>
-      </NavEl>
+            <Item label="Home" to="/" exact/>
+            <Item label="About" to="/about"/>
+          </Menu>
+        </NavEl>
     )}
   </Bloki>
 );
 
-const Item = ({label, ...props}) => (
-  <MenuItem>
-      <NavLink  {...props}>
-      {label}
-    </NavLink>
-  </MenuItem>
-);
+  const B = styles => (
+    <animated.div
+      style={{ backgroundColor: '#14D790' }}>
+      B
+  </animated.div>
+  )
+class Item extends Component {
+  state = { toggled: true }
+  toggle = e => this.setState(state => ({ toggled: !state.toggled }))
 
+  A = styles => {
+    console.log(styles);
+    return (
+      <animated.div style={{...styles}}>
+      <MenuItem onClick={this.toggle}>
+        <NavLink {...this.props}>
+          {this.props.label}
+        </NavLink>
+      </MenuItem>
+      </animated.div>
+    )
+  }
+  B = styles => (
+    <animated.div style={{ ...styles }}>
+      <MenuItem onClick={this.toggle}>
+        <NavLink {...this.props}>
+          {this.props.label}
+        </NavLink>
+      </MenuItem>
+    </animated.div>
+  )
 
-export default Nav;
+  render() {
+    const { label, ...rest } = this.props;
+    
+    return (
+      <MenuItem>
+        <NavLink {...rest} className={Anchor} activeClassName={Active}>
+          {label}
+        </NavLink>
+      </MenuItem>
+    )
+  }
+}
 

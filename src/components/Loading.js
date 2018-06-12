@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import styled from 'react-emotion';
 import Bloki from 'bloki';
 import PropTypes from 'prop-types';
-
-import { Motion, spring } from 'react-motion';
-import { DEFAULT_DEPRECATION_REASON } from 'graphql';
+import { Spring, config, } from 'react-spring';
+import { OscillatorAnimation, TimingAnimation, Easing }  from 'react-spring/dist/addons';
 import { timeout } from 'async';
 
 const LoadingEl = styled('div')`
@@ -49,24 +48,25 @@ export default class Loading extends Component {
   }
   render() {
     const { width } = this.props;
+    const { isResting } = this.state;
     return (
       <Bloki align="center" justify="center" style={{width: '100%'}}>
-        <Motion 
-          defaultStyle={{ x: 0, s: 1 }} 
-          style={{ 
-            x: spring(1, { stiffness: 180, damping: 20 }),
-            s: this.state.isResting ? 0 : spring(4, { stiffness: 130, damping: 12 },) 
-          }} 
+      
+        <Spring
+          config={{ tension: isResting ? 110 : 80, friction: isResting ? 8 : 5 }} // { tension: 180, friction: 12 },
+          from={{ opacity: 0, scale: 0 }} 
+          to={{
+            opacity: 1, scale: isResting ? 2.5 : 4,
+          }}
           onRest={this.handleRest}
         >
           {
-           ({x, s}) => 
-            <LoadingEl width={width} animation={x}>
-              <LoadingElInner width={width / 4} animation={s} />
+           ({opacity, scale}) => 
+            <LoadingEl width={width} animation={opacity}>
+              <LoadingElInner width={width / 4} animation={scale} />
             </LoadingEl>
-            
           }
-        </Motion>
+        </Spring>
       </Bloki>
     );
   }

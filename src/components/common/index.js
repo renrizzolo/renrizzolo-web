@@ -5,6 +5,7 @@ export const Heading = styled('h1')`
   margin: 0;
   @media screen and (max-width: 420px){
     margin-top: 1rem;
+    font-size: 1.2rem;
   }
 `;
 export const LargeHeading = styled('h1')`
@@ -18,9 +19,25 @@ export const LargeHeading = styled('h1')`
 export const ImgEl = styled('img')`
     width:100%;
     height: auto;
+    vertical-align: bottom;
 `;
 export const Img = (props) => (
     <figure itemprop="image" itemscope ="" itemtype ="https://schema.org/ImageObject">
         <ImgEl {...props}/>
     </figure>
 )
+
+export const Grid = styled('div')`
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 4rem 2rem;
+  @media screen and (max-width: 899px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 420px) {
+    grid-template-columns: auto;
+      grid-gap: 2rem 1rem;
+
+  }
+`
