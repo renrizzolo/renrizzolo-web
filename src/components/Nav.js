@@ -60,7 +60,7 @@ const Active = css`
 `;
 export default () => (
 
-    <Bloki col auto>
+    <Bloki col auto innerSpacing={false}>
       {theme => (
         <NavEl>
           <Branding to="/"><h1>Ren Rizzolo</h1></Branding>

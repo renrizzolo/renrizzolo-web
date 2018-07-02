@@ -37,14 +37,12 @@ const Post = ({ match }) => (
       if (error) return <Error>Couldn't load the post</Error>;
       return (
   <React.Fragment>
-    <Container>
       <Date date={post.dateAndTime} />
       <Img
         className={css`object-fit: cover; max-height: 500px;`}
         alt={post.title}
         src={`https://media.graphcms.com/resize=w:650,h:366,fit:crop/${post.coverImage.handle}`}
       />
-    </Container>
           <ArticleContainer>
             <FadeIn>
               <article>

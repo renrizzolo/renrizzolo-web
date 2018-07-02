@@ -8,6 +8,7 @@ import Home from './views/Home';
 import About from './views/About';
 import Post from './views/Post';
 import Tag from './views/Tag';
+import Footer from './components/Footer';
 import ListPosts from './components/ListPosts';
 
 import { injectGlobal } from 'emotion';
@@ -24,7 +25,7 @@ const emotionTheme = {
   colors: {
     primary: '#e3778c',
     primaryDark: '#c22954',
-    brand: '#50363d',
+    brand: '#281e21',
     error: 'crimson',
   }
 };
@@ -94,32 +95,30 @@ const blokiTheme = {
 // @todo: Make bloki use className so the styles can be overridden
 const Root = css`
     margin: 0 auto!important;
-    height: 100vh;
+    min-height: 100vh;
+    max-width: 1440px;
+    padding: ${blokiTheme.spacing}px;
 `;
 const App = () => (
   <ThemeProvider theme={emotionTheme}>
     <BlokiProvider theme={blokiTheme}>
       <Router>
-        <Bloki
-          innerSpacing={false}
-          wrap={false}
-          className={css`${Root}`}
-          justify="flex-start"
-          align="flex-start"
-          mdUpStyle={{ maxWidth: blokiTheme.breakpoints.sm - 32 }}
-          lgUpStyle={{ maxWidth: 1440 }}
-        >
+        <div className={css`${Root}`}>
           <Bloki row>
-            <Header />
-            <main className={css`width: 100%;`}>
+            <Bloki col xs={12} component="header">
+              <Header />
+            </Bloki>
+            <Bloki col xs={12} component="main">
               <Route exact path="/" component={Home} />
               <Route path="/about" component={About} />
               <Route path="/post/:slug" component={Post} />
               <Route path="/tag/:tag" component={Tag}/>
-
-            </main>
+            </Bloki>
+            <Bloki col xs={12} component="footer">
+              <Footer/>
+            </Bloki>
           </Bloki>
-        </Bloki>
+        </div>
       </Router>
     </BlokiProvider>
   </ThemeProvider>

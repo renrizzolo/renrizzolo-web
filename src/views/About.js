@@ -16,7 +16,6 @@ const Paragraph = styled('p')`
 `;
 
 const About = () => (
-  <Container>
     <section>
       <Query query={allAuthors}>
         {({
@@ -31,14 +30,14 @@ const About = () => (
 
               <React.Fragment key={author.id}>
               <Bloki row>
-                <Bloki innerSpacing={false} col xl={1} lg={2} md={2} sm={2} xs={12}>
+                <Bloki col xl={1} lg={2} md={2} sm={2} xs={12}>
                   <Img
                     className={css`min-width: 50px;max-width: 90px;`}
                     alt={author.name}
                     src={`https://media.graphcms.com/resize=w:100,h:100,fit:crop/${author.avatar.handle}`}
                   />
                 </Bloki>
-                <Bloki innerSpacing={false} col xl={11} lg={10} md={10} sm={10} xs={12}>
+                <Bloki col xl={11} lg={10} md={10} sm={10} xs={12}>
                   <Heading>Hello! My name is {author.name}</Heading>
                   <Paragraph>{author.about}</Paragraph>
                 </Bloki>
@@ -53,8 +52,6 @@ const About = () => (
       }}
       </Query>
     </section>
-  </Container>
-
 );
 
 

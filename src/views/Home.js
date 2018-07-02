@@ -4,8 +4,9 @@ import Container from '../components/Container';
 import ListPosts from '../components/ListPosts';
 export default () => {
   return (
-    <Container>
+    <div style={{width: '100%'}}>
+      <h3>Posts</h3>
       <ListPosts />
-    </Container>
+    </div>
   )
 }
