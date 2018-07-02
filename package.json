@@ -9,7 +9,7 @@
     "apollo-cache-inmemory": "^1.1.1",
     "apollo-client": "^2.0.3",
     "apollo-link-http": "^1.2.0",
-    "bloki": "git+https://github.com/renrizzolo/bloki.git",
+    "bloki": "git+https://github.com/renrizzolo/bloki.git#dev",
     "emotion": "^9.2.3",
     "emotion-theming": "^9.2.3",
     "graphql": "^0.11.7",

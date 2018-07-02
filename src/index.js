@@ -13,7 +13,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 // GraphCMS project endpoint
 const GRAPHCMS_API = 'https://api.graphcms.com/simple/v1/cji9mx4qi1ae801609c703thd';
-
+// GraphCMS beta is borked
+// const GRAPHCMS_API = 'https://api-uswest.graphcms.com/v1/cjid6jtrm00r401eejq2dlcd3/master';
 const client = new ApolloClient({
   link: new HttpLink({ uri: GRAPHCMS_API }),
   cache: new InMemoryCache(),

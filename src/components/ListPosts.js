@@ -37,11 +37,10 @@ const ListPosts = (props) => {
           }) => {
         console.log(loading, error, allPosts);
           if (loading) return <Loading />;
-          if (error) return <Error>Couldn't load the post</Error>;
+          if (error || !allPosts) return <Error>Couldn't load the post</Error>;
           const areMorePosts = _allPostsMeta.count > allPosts.length && allPosts.length > 0;
         return (
           <Grid>
-            
             {allPosts.length ?
               <Trail from={{ opacity: 0 }} to={{ opacity: 1 }} keys={allPosts.map(post => post.id)}>
 

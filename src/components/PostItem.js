@@ -1,16 +1,25 @@
 import React, { Component } from 'react'
 import styled, { css } from 'react-emotion';
-import {Spring } from 'react-spring';
-import { Link } from 'react-router-dom';
-import { Img, Heading, Grid } from '../components/common';
+import { Spring, animated, interpolate } from 'react-spring';
+import { TimingAnimation, Easing } from 'react-spring/dist/addons'
 
-const PostHeading = css`
-  position: absolute;
-  bottom: 0;
-  left: 0;
+import { Link } from 'react-router-dom';
+import { Img, Heading } from '../components/common';
+
+const PostHeading = styled('h1')`
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${props => props.theme.colors.brand};
   color: white;
+  max-height: 100%;
+  margin: 0;
+  @media screen and (max-width: 420px){
+    margin-top: 1rem;
+    font-size: 1.2rem;
+  }
+`;
+const GridItem = styled('div')`
+  background-color: ${props => props.background ? props.theme.colors.brand : null};
+  Position: relative;
 `;
 export default class PostItem extends Component {
   state = {
@@ -25,30 +34,54 @@ export default class PostItem extends Component {
       console.log(hover);
       
     return (
-      <div key={`post-${post.id}`} style={this.props.styles} className={css`position: relative;`}>
-            <Link to={`/post/${post.slug}`}>
-              {
-                post.coverImage &&
-                <Img
-                  // className={css`max-width: 300px;`}
-                  alt={post.title}
-                  src={`https://media.graphcms.com/resize=w:300,h:300,fit:crop/${post.coverImage.handle}`}
-                />
-              }
-              <Spring 
-                from={{ 
-                  backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                }} 
-                to={{ 
-                  backgroundColor: hover ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.3)',
-                }}
-              >
-              {(backgroundColor) =>
-              <Heading onMouseEnter={() => this.setState({ hover: true })} onMouseOut={() => this.setState({ hover: false })}  className={css`${PostHeading} ${backgroundColor}`} >{post.title}</Heading>
-              }
+      <GridItem
+        background={true}
+        onMouseEnter={() => this.setState({ hover: true })}
+        onMouseLeave={() => this.setState({ hover: false })}  
+        key={`post-${post.id}`} 
+        style={this.props.styles} 
+      >
+          <Link to={`/post/${post.slug}`}>
+            {  post.coverImage &&
+                <Spring
+                  from={{
+                    transform: 'scale(1)',
+                  }}
+                  to={{
+                    transform: hover ? 'scale(1.12)' : 'scale(1)',
+                  }}
+                >
+                  {(style) =>
+                  <Img
+                    // className={css`max-width: 300px;`}
+                    className={css`${style}`}
+                    alt={post.title}
+                    src={`https://media.graphcms.com/resize=w:450,h:250,fit:crop/${post.coverImage.handle}`}
+                  />
+                }
               </Spring>
-            </Link>
-        </div>
+            }
+        <Spring
+          native
+          impl={TimingAnimation}
+          config={{ duration: 400, easing: Easing.elastic(2) }}
+          from={{
+            y: 0,
+          }}
+          to={{
+            y: hover ? -6 : 0,
+          }}
+        >
+            {({y}) =>
+              <animated.div style={{transform: interpolate(y, (y) => `translateY(${y}px)`)}}>
+                <PostHeading >
+                {post.title}
+                </PostHeading>
+              </animated.div>
+          }
+        </Spring>
+          </Link>
+      </GridItem>
     )
   }
 }
